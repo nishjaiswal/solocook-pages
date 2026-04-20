@@ -215,6 +215,48 @@
   .field input::placeholder {
     color: rgba(245,239,224,0.35);
   }
+  /* Segmented radio group (iPhone / Android / Both) — pill-style
+     buttons matching the form's dark aesthetic. */
+  .field .radio-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+  .field .radio-options label {
+    /* override the tiny mono eyebrow style inherited from .field label */
+    font-family: -apple-system, sans-serif;
+    font-size: 15px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--paper);
+    margin-bottom: 0;
+    /* pill visuals */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+    user-select: none;
+  }
+  .field .radio-options label:hover {
+    background: rgba(255,255,255,0.10);
+  }
+  .field .radio-options input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  /* Selected state — teal tint + teal-highlight border. */
+  .field .radio-options label:has(input:checked) {
+    background: rgba(1,105,111,0.35);
+    border-color: var(--teal-hi);
+    color: var(--teal-hi);
+  }
+
   /* Honeypot — hidden to humans, bots fill it */
   .field.hp { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
   button[type="submit"] {
@@ -345,10 +387,21 @@
                    autocomplete="name">
           </div>
           <div class="field">
-            <label for="platform">iPhone or Android?</label>
-            <input id="platform" name="platform" type="text"
-                   placeholder="iPhone / Android / both"
-                   autocomplete="off">
+            <label>iPhone or Android?</label>
+            <div class="radio-options">
+              <label>
+                <input type="radio" name="platform" value="iPhone" required>
+                iPhone
+              </label>
+              <label>
+                <input type="radio" name="platform" value="Android">
+                Android
+              </label>
+              <label>
+                <input type="radio" name="platform" value="Both">
+                Both
+              </label>
+            </div>
           </div>
           <div class="field">
             <label for="note">Anything else? (optional)</label>
