@@ -3,17 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SoloCook</title>
+<title>SoloCook — Dinner, for one.</title>
+<meta name="description" content="Cook what's already in your fridge. 115,000 recipes, scaled for one person, filtered to what you have. No accounts, no server, no one watching.">
+<meta property="og:title" content="SoloCook — Dinner, for one.">
+<meta property="og:description" content="Tired of giving Deliveroo your rent? Cook what's in your fridge, for one person, using what you already have.">
+<meta property="og:image" content="https://nishjaiswal.github.io/solocook-pages/app-icon.png">
+<meta property="og:url" content="https://nishjaiswal.github.io/solocook-pages/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#FBF8F2">
+<link rel="icon" type="image/png" href="app-icon.png">
 <style>
   :root {
-    --paper: #FBF8F2;
-    --cream: #F5F1EA;
-    --ink: #1A1714;
-    --ink2: #3A3530;
-    --ink3: #6B6359;
-    --rule: #D8CEB8;
-    --teal: #01696F;
-    --gold: #F2C94C;
+    --paper:    #FBF8F2;
+    --cream:    #F5F1EA;
+    --cream2:   #EADFC5;
+    --ink:      #1A1714;
+    --ink2:     #3A3530;
+    --ink3:     #6B6359;
+    --ink4:     #8E857A;
+    --rule:     #D8CEB8;
+    --rule-soft:#E6DFCE;
+    --teal:     #01696F;
+    --teal-hi:  #6FC3C0;
+    --clay:     #C05746;
+    --gold:     #F2C94C;
+    --deep:     #0E0C09;
   }
   * { box-sizing: border-box; }
   html, body {
@@ -22,96 +36,370 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
                  Helvetica, Arial, sans-serif;
     line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
   }
-  main {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 80px 28px;
-  }
-  .eyebrow {
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .mono {
     font-family: ui-monospace, "SF Mono", Menlo, monospace;
     font-size: 11px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--ink3);
-    margin-bottom: 12px;
   }
-  h1 {
+  .serif {
     font-family: "Times New Roman", Georgia, serif;
-    font-size: 56px;
-    font-weight: normal;
     letter-spacing: -0.015em;
-    line-height: 1.02;
-    margin: 0 0 14px;
   }
-  h1 em { color: var(--teal); font-style: italic; }
+  .italic { font-style: italic; }
+  a { color: var(--teal); }
+
+  /* ── HERO ───────────────────────────────────────────── */
+  .hero {
+    padding: 80px 0 40px;
+    text-align: center;
+  }
+  .icon {
+    width: 128px; height: 128px;
+    border-radius: 28px;
+    box-shadow:
+      0 20px 40px rgba(0,0,0,0.18),
+      0 2px 6px rgba(0,0,0,0.08),
+      0 0 0 1px rgba(0,0,0,0.06);
+    margin: 0 auto 30px;
+    display: block;
+  }
+  .eyebrow { margin-bottom: 14px; }
+  h1.headline {
+    font-family: "Times New Roman", Georgia, serif;
+    font-weight: normal;
+    font-size: clamp(48px, 8vw, 86px);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin: 0 0 18px;
+    color: var(--ink);
+  }
+  h1.headline em { color: var(--teal); font-style: italic; }
   .tagline {
-    font-size: 16px;
-    color: var(--ink3);
-    margin-bottom: 50px;
-    max-width: 480px;
+    font-size: 18px;
+    color: var(--ink2);
+    max-width: 520px;
+    margin: 0 auto 36px;
+    line-height: 1.5;
   }
-  .links { display: grid; gap: 14px; }
-  a.card {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 20px 22px;
+
+  /* ── HOOK BLOCK ────────────────────────────────────── */
+  .hook {
+    padding: 40px 0 60px;
+    border-top: 1px solid var(--rule-soft);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .hook-inner {
+    max-width: 640px; margin: 0 auto;
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 24px; line-height: 1.45;
+    color: var(--ink);
+    text-align: left;
+  }
+  .hook-inner em { color: var(--teal); font-style: italic; }
+  .hook-inner .stat {
+    color: var(--clay); font-style: italic;
+  }
+
+  /* ── FEATURES ──────────────────────────────────────── */
+  section.features {
+    padding: 80px 0;
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 28px;
+    margin-top: 40px;
+  }
+  .feature {
+    padding: 28px;
     background: var(--cream);
     border: 1px solid var(--rule);
-    border-radius: 14px;
-    text-decoration: none;
-    color: var(--ink);
-    transition: transform 0.12s ease, border-color 0.12s ease;
+    border-radius: 16px;
   }
-  a.card:hover {
-    transform: translateY(-1px);
-    border-color: var(--teal);
-  }
-  a.card .label {
+  .feature .num {
     font-family: "Times New Roman", Georgia, serif;
+    font-style: italic;
+    color: var(--gold);
+    font-size: 48px;
+    line-height: 1;
+  }
+  .feature h3 {
+    font-family: "Times New Roman", Georgia, serif;
+    font-weight: normal;
     font-size: 22px;
+    line-height: 1.2;
+    margin: 12px 0 8px;
+    color: var(--ink);
   }
-  a.card .sub {
-    display: block;
-    font-size: 13px;
+  .feature h3 em { color: var(--teal); font-style: italic; }
+  .feature p {
+    font-size: 14px;
     color: var(--ink3);
-    margin-top: 3px;
+    margin: 0;
+    line-height: 1.5;
   }
-  a.card .arrow { color: var(--teal); font-size: 20px; }
-  footer {
+
+  /* ── PROMISE ───────────────────────────────────────── */
+  section.promise {
+    background: var(--deep); color: var(--cream);
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  section.promise::before {
+    content: "";
+    position: absolute;
+    top: -50%; left: -20%;
+    width: 60%; height: 100%;
+    background: radial-gradient(ellipse, rgba(1,105,111,0.35), transparent 70%);
+    pointer-events: none;
+  }
+  section.promise::after {
+    content: "";
+    position: absolute;
+    bottom: -50%; right: -20%;
+    width: 70%; height: 100%;
+    background: radial-gradient(ellipse, rgba(242,201,76,0.18), transparent 70%);
+    pointer-events: none;
+  }
+  .promise-inner {
+    position: relative;
+    max-width: 620px; margin: 0 auto;
+    text-align: center;
+  }
+  .promise .eyebrow { color: var(--ink4); }
+  h2.section-title {
+    font-family: "Times New Roman", Georgia, serif;
+    font-weight: normal;
+    font-size: clamp(34px, 5vw, 48px);
+    letter-spacing: -0.015em;
+    line-height: 1.05;
+    margin: 12px 0 20px;
+  }
+  h2.section-title em { color: var(--gold); font-style: italic; }
+  .promise p {
+    font-size: 16px; color: var(--ink4);
+    line-height: 1.6;
+    max-width: 480px; margin: 0 auto 12px;
+  }
+  .promise-list {
+    list-style: none; padding: 0;
+    margin: 30px auto 0; max-width: 480px;
+    text-align: left;
+  }
+  .promise-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 15px;
+    color: var(--cream);
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  .promise-list li::before {
+    content: "✦";
+    color: var(--teal-hi);
+    font-style: italic;
+    font-size: 14px;
+  }
+
+  /* ── DOWNLOAD ──────────────────────────────────────── */
+  section.download {
+    padding: 80px 0;
+    text-align: center;
+  }
+  .stores {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 14px;
+    margin-top: 30px;
+  }
+  .store-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 14px 22px 14px 18px;
+    background: var(--ink); color: var(--cream);
+    border-radius: 14px; text-decoration: none;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    transition: transform 0.12s ease;
+  }
+  .store-btn:hover { transform: translateY(-1px); }
+  .store-btn .glyph {
+    font-size: 26px;
+  }
+  .store-btn .label {
+    display: flex; flex-direction: column; align-items: flex-start;
+    line-height: 1.1;
+  }
+  .store-btn .pre {
+    font-size: 10px; letter-spacing: 0.08em; opacity: 0.7;
+  }
+  .store-btn .name {
+    font-size: 17px; font-weight: 600;
+  }
+  .coming-soon {
     font-family: ui-monospace, "SF Mono", Menlo, monospace;
-    font-size: 11px; letter-spacing: 0.1em;
-    color: var(--ink3); text-align: center;
-    margin-top: 80px;
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--clay);
+    margin-top: 22px;
+  }
+
+  /* ── FOOTER ────────────────────────────────────────── */
+  footer.foot {
+    padding: 60px 0;
+    border-top: 1px solid var(--rule-soft);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 11px; letter-spacing: 0.08em;
+    color: var(--ink3);
+    text-align: center;
+  }
+  footer.foot a {
+    margin: 0 12px;
+    color: var(--ink3);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 2px;
+  }
+  footer.foot a:hover { color: var(--teal); border-color: var(--teal); }
+  footer.foot .credit {
+    margin-top: 24px;
+    color: var(--ink4);
+    letter-spacing: 0.18em;
+  }
+  footer.foot .credit span {
+    font-family: "Times New Roman", serif;
+    font-style: italic;
+    color: var(--clay);
+    letter-spacing: 0;
   }
 </style>
 </head>
 <body>
-<main>
-  <div class="eyebrow">SoloCook · est. 2026</div>
-  <h1>Dinner, <em>for one.</em></h1>
-  <p class="tagline">
-    Cook what's already in your fridge. No families. No meal-prep for
-    twelve. Just dinner, for you.
-  </p>
 
-  <div class="links">
-    <a class="card" href="privacy.html">
-      <div>
-        <div class="label">Privacy Policy</div>
-        <span class="sub">What we collect and why. (Spoiler: nothing.)</span>
-      </div>
-      <span class="arrow">→</span>
-    </a>
-    <a class="card" href="support.html">
-      <div>
-        <div class="label">Support</div>
-        <span class="sub">Broken? Confused? Write to us.</span>
-      </div>
-      <span class="arrow">→</span>
-    </a>
+<section class="hero">
+  <div class="wrap">
+    <img class="icon" src="app-icon.png" alt="SoloCook">
+    <div class="eyebrow mono">SoloCook · Est. 2026</div>
+    <h1 class="headline">
+      Dinner,<br>
+      <em>for one.</em>
+    </h1>
+    <p class="tagline">
+      Cook what's already in your fridge. No families. No meal-prep for
+      twelve. Just dinner, for you.
+    </p>
   </div>
+</section>
 
-  <footer>MADE WITH SOLOCOOK</footer>
-</main>
+<section class="hook">
+  <div class="wrap">
+    <div class="hook-inner">
+      Cooking apps are built for families. <em>This one isn't.</em><br><br>
+      The average UK solo dweller spends <span class="stat">over £200 a month</span> on takeaway. A week of home-cooked meals costs £30. The maths isn't close. SoloCook tracks every meal you cook and tells you, in plain pounds, what you've saved.
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="wrap">
+    <div class="eyebrow mono" style="text-align:center;">What's in the app</div>
+    <h2 class="section-title" style="text-align:center;color:var(--ink);">
+      Three doors, <em>one dinner.</em>
+    </h2>
+
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="num">1</div>
+        <h3>The <em>fridge filter.</em></h3>
+        <p>
+          Tap the ingredients you have. See the 115,000-recipe catalogue
+          narrow down to what you can cook right now, plus what you're
+          one ingredient short on.
+        </p>
+      </div>
+      <div class="feature">
+        <div class="num">2</div>
+        <h3>Scales <em>for one.</em></h3>
+        <p>
+          Every recipe flips between "just me" and "me + one" with a single
+          tap. Quantities, kcal, and time adjust. No wasted food, no
+          leftovers that haunt your fridge for four days.
+        </p>
+      </div>
+      <div class="feature">
+        <div class="num">3</div>
+        <h3>A <em>quiet</em> streak.</h3>
+        <p>
+          Every meal you cook stamps a takeaway's worth into a running
+          counter on Home. Share an editorial card to Stories when you
+          feel quietly smug.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="promise">
+  <div class="wrap">
+    <div class="promise-inner">
+      <div class="eyebrow mono">Quietly, by default</div>
+      <h2 class="section-title">
+        No account. <em>No server.</em>
+      </h2>
+      <p>
+        SoloCook runs entirely on your phone. No analytics. No login.
+        No friends list. No pings. If you delete the app, everything's gone.
+      </p>
+      <ul class="promise-list">
+        <li>All state stored on-device. Nothing sent to us, because there is no us.</li>
+        <li>No tracking, no advertising, no data shared with third parties.</li>
+        <li>Network requests are limited to anonymous image and recipe lookups.</li>
+        <li>Your data leaves your device only when you press share.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="download">
+  <div class="wrap">
+    <div class="eyebrow mono">Get it</div>
+    <h2 class="section-title" style="color:var(--ink);">
+      Coming <em>soon.</em>
+    </h2>
+    <p class="tagline">
+      Approval pending on both stores. Links go live the moment they do.
+    </p>
+    <div class="stores">
+      <a class="store-btn" href="#" aria-disabled="true">
+        <span class="glyph">&#xF8FF;</span>
+        <span class="label">
+          <span class="pre">Download on the</span>
+          <span class="name">App Store</span>
+        </span>
+      </a>
+      <a class="store-btn" href="#" aria-disabled="true">
+        <span class="glyph">▶</span>
+        <span class="label">
+          <span class="pre">Get it on</span>
+          <span class="name">Google Play</span>
+        </span>
+      </a>
+    </div>
+    <div class="coming-soon">Arriving · 2026</div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <a href="privacy.html">Privacy</a>
+    <a href="support.html">Support</a>
+    <a href="mailto:google.pronounce276@passmail.com">Contact</a>
+    <div class="credit">
+      MADE WITH <span>♥</span> BY NISHESH JAISWAL
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
