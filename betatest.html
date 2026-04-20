@@ -121,7 +121,11 @@
   /* ── Option cards ────────────────────────────────────── */
   section.options {
     padding: 36px 0 20px;
-    display: grid; gap: 18px;
+  }
+  /* Cards live inside `.wrap` — put the grid here so gap actually applies. */
+  section.options .wrap {
+    display: grid;
+    gap: 24px;
   }
   .card {
     position: relative;
