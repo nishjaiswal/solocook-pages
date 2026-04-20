@@ -122,10 +122,11 @@
   section.options {
     padding: 36px 0 20px;
   }
-  /* Cards live inside `.wrap` — put the grid here so gap actually applies. */
-  section.options .wrap {
-    display: grid;
-    gap: 24px;
+  /* Simple sibling-margin rule — any card that follows another card
+     gets 100px of breathing room above it. Works in any layout mode,
+     unaffected by flex/grid inheritance quirks. */
+  section.options .card + .card {
+    margin-top: 100px;
   }
   .card {
     position: relative;
